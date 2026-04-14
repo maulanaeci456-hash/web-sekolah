@@ -1,0 +1,1782 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning SMKN2 Surabaya</title>
+  <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Perfect Dark Neon - FIXED Button Function */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --neon-cyan: #00f5ff;
+      --neon-purple: #ff00ff;
+      --neon-magenta: #7c3aed;
+      --bg-dark: linear-gradient(135deg, #0a0a0f 0%, #0f0f23 50%, #0a0a0f 100%);
+      --glass: rgba(255,255,255,0.08);
+      --glass-border: rgba(0,245,255,0.3);
+      --glow: 0 0 25px rgba(0,245,255,0.6);
+      color: #e2e8f0;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-dark); overflow-x: hidden; position: relative; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 20% 80%, var(--neon-cyan) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--neon-purple) 0%, transparent 50%);
+      animation: bgPulse 20s ease-in-out infinite;
+      opacity: 0.3;
+      z-index: -2;
+    }
+
+    @keyframes bgPulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.05); }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0,245,255,0.08) 50%, transparent 70%);
+      animation: shine 5s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100vw) rotate(45deg); }
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 10; }
+
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(20px);
+      background: var(--glass);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 100;
+    }
+
+    .topbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      min-height: 70px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #000;
+      box-shadow: var(--glow);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav { display: flex; gap: 1.5rem; }
+
+    .nav-link {
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      color: rgba(226,232,240,0.9);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--neon-cyan);
+      background: rgba(0,245,255,0.1);
+      box-shadow: var(--glow);
+    }
+
+    .page-shell { padding-top: 80px; }
+
+    .section { padding: 100px 0; min-height: 100vh; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-text { font-size: 1.2rem; color: rgba(226,232,240,0.9); max-width: 550px; line-height: 1.8; }
+
+    .hero-actions { display: flex; gap: 1rem; margin: 2rem 0; }
+
+    .button {
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      box-shadow: var(--glow);
+    }
+
+    .secondary { background: var(--glass); color: #e2e8f0; border: 1px solid var(--glass-border); }
+
+    .button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,245,255,0.4); }
+
+    .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+    .stat-card {
+      padding: 1.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .stat-card strong { display: block; font-size: 2rem; color: var(--neon-cyan); }
+
+    .hero-panel { display: grid; gap: 1.5rem; }
+
+    .panel-large {
+      padding: 2.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
+    }
+
+    .panel-label {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 5rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover { transform: translateY(-10px); box-shadow: var(--glow); }
+
+    .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+
+    .section-alt {
+      background: rgba(15,15,35,0.5);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .learning-controls { text-align: center; margin-bottom: 3rem; }
+
+    .search-input {
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: inherit;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .learning-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .material-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .material-card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
+
+    .materi-detail {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      line-height: 1.6;
+    }
+
+    .quiz-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+    .quiz-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .footer { padding: 4rem 0; text-align: center; border-top: 1px solid var(--glass-border); }
+
+    /* Fullscreen Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,15,0.95);
+      backdrop-filter: blur(40px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--glass);
+      backdrop-filter: blur(50px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      max-width: 98vw;
+      max-height: 98vh;
+      width: 1200px;
+      height: 900px;
+      padding: 4rem;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.85) translateY(50px);
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 50px 100px rgba(0,0,0,0.8);
+    }
+
+    @media (max-width: 1300px) {
+      .modal-content { width: 95vw; height: 85vh; }
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .modal-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .modal-close {
+      background: rgba(255,0,255,0.2);
+      border: 1px solid rgba(255,0,255,0.4);
+      color: var(--neon-purple);
+      font-size: 1.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0.75rem;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal-close:hover {
+      background: var(--neon-purple);
+      color: #000;
+      transform: rotate(180deg) scale(1.1);
+      box-shadow: var(--glow);
+    }
+
+    .modal-body {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .modal-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      background: var(--glass);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    .modal-body th {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      padding: 1.5rem;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .modal-body td {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .modal-body tr:hover td {
+      background: rgba(0,245,255,0.1);
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .features { grid-template-columns: repeat(2, 1fr); }
+      .topbar__inner { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar__inner container">
+        <a class="brand" href="#beranda">
+          <span class="brand-mark">SMK</span>
+          <div>
+            <span class="brand-label">SMKN 2 Surabaya</span>
+            <strong class="brand-title">E-Learning Konstruksi</strong>
+          </div>
+        </a>
+        <nav class="nav">
+          <a class="nav-link active" href="#beranda">Beranda</a>
+          <a class="nav-link" href="#pembelajaran">Pembelajaran</a>
+          <!-- <a class="nav-link" href="#soal">Soal Latihan</a> -->
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="beranda" class="section hero-section">
+        <canvas id="particles-bg" aria-hidden="true" style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:1;pointer-events:none;"></canvas>
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Platform Pembelajaran SMKN2</span>
+            <h1>Dasar-Dasar Teknik Pekerjaan Konstruksi dan Perumahan</h1>
+            <!-- <p class="hero-text">Materi, kuis, dan panduan khusus untuk siswa SMK Teknik Konstruksi Perumahan agar siap uji kompetensi dan proyek lapangan.</p> -->
+            <div class="hero-actions">
+              <a class="button primary" href="#pembelajaran">Mulai Belajar</a>
+              <a class="button secondary" href="#soal">Coba Kuis</a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-card">
+                <strong>16+</strong>
+                <span>Materi Dasar Pekerjaan Konstruksi</span>
+              </div>
+              <div class="stat-card">
+                <strong>20+</strong>
+                <span>Soal Latihan</span>
+              </div>
+              <div class="stat-card">
+                <strong>20+</strong>
+                <span>Akses Video Pembelajaran</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="panel-large">
+              <span class="panel-label">Soal Latihan</span>
+              <h2>SOAL TEKNIK PEKERJAAN KONSTRUKSI</h2>
+              <p>Latihan soal untuk memperdalam materi dasar-dasar pekerjaan konstruksi.</p>
+              <!-- <span class="panel-footer">Pelajari lebih lanjut →</span> -->
+            </div>
+            <!-- <div class="panel-grid">
+              <div class="panel-small">📘 Modul Digital</div>
+              <div class="panel-small">📝 Kuis Interaktif</div>
+              <div class="panel-small">🎯 Materi Terstruktur</div>
+            </div> -->
+          </div>
+        </div>
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Materi Terstruktur</h3>
+            <p>Konten disusun sesuai topik agar mudah dipahami dan diulang.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <h3>Quiz Interaktif</h3>
+            <p>Latihan untuk menguji pemahaman secara praktis.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📺</div>
+            <h3>Video Praktik</h3>
+            <p>Demo kerja lapangan yang mendukung teori teknik.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👩‍🏫</div>
+            <h3>Dukungan Guru</h3>
+            <p>Tips belajar dan panduan khusus untuk siswa SMK.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pembelajaran" class="section section-alt">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Materi Pembelajaran</span>
+            <h2>Pelajari semua topik konstruksi dengan mudah</h2>
+          </div>
+          <div class="learning-controls">
+            <input type="text" placeholder="🔍 Cari materi pembelajaran..." class="search-input">
+          </div>
+          <div class="learning-grid">
+            <article class="material-card" data-modal="leveling-modal">
+              <h3>📐 Pekerjaan Leveling dan Uitzet</h3>
+              <!-- <p>Teknik pengukuran dan penandaan lokasi bangunan sesuai gambar rencana.</p> -->
+               <br/>
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="leveling-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="leveling-modal">🎓 Quick View</button>
+              </div>
+            </article>
+            <article class="material-card" data-modal="pondasi-modal">
+              <h3>🏗️ Pekerjaan Galian Tanah</h3>
+              <!-- <p>Dasar pondasi perumahan untuk membangun struktur yang kuat. Klik untuk table lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="pondasi-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="pondasi-modal">🎓 Quick View</button>
+              </div>
+            </article>
+            <article class="material-card" data-modal="beton-modal">
+              <h3>🏢 Pekerjaan Pondasi</h3>
+              <!-- <p>Sloof, kolom, dan balok sebagai kerangka utama bangunan.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="beton-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="beton-modal">🎓 Quick View</button>
+              </div>
+            </article>
+            <article class="material-card" data-modal="dinding-modal">
+              <h3>🏛️ Pekerjaan Sloof</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="dinding-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="dinding-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="kolom-modal">
+              <h3>🧱 Pekerjaan Kolom</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="kolom-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="kolom-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="balok-modal">
+              <h3>🟫 Pekerjaan Balok</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="balok-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="balok-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="dinding1-modal">
+              <h3>🔷 Pekerjaan Dinding</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="dinding1-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="dinding1-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="kusen-modal">
+              <h3>🪟 Pekerjaan Kusen, Daun Pintu, dan Daun Jendela</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="kusen-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="kusen-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="plester-modal">
+              <h3>🏠 Pekerjaan Plesteran dan Acian Dinding</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="plester-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="plester-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="lantai-modal">
+              <h3>⬜️ Pekerjaan Lantai</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="lantai-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="lantai-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="rangkaatap-modal">
+              <h3>🏠 Pekerjaan Rangka Atap</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="rangkaatap-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="rangkaatap-modal">🎓 Quick View</button>
+              </div>
+            </article>
+             <article class="material-card" data-modal="plafon-modal">
+              <h3>🛖 Pekerjaan Plafon</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="plafon-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="plafon-modal">🎓 Quick View</button>
+              </div>
+            </article>
+                         <article class="material-card" data-modal="mep-modal">
+              <h3> ⚡ekerjaan MEP (Mechanical, Electrical, Plumbing)</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="mep-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="mep-modal">🎓 Quick View</button>
+              </div>
+              </article>
+                           <article class="material-card" data-modal="finishing-modal">
+              <h3>🎨🖌️ Pekerjaan Finishing</h3>
+              <!-- <p>Pemasangan bata, plesteran, dan finishing dinding. Table spesifikasi lengkap.</p> -->
+              <div class="material-buttons">
+                <button class="btn-materi primary" data-modal="finishing-modal">📖 Baca Fullscreen</button>
+                <button class="btn-materi secondary" data-modal="finishing-modal">🎓 Quick View</button>
+              </div>
+              </article>
+        
+
+        </div>
+      </section>
+
+      <section id="soal" class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Soal Latihan</span>
+            <h2>Uji kemampuanmu dengan kuis konstruksi</h2>
+          </div>
+          <!-- <div class="quiz-grid">
+            <article class="quiz-card">
+              <h3>🏗️ Struktur</h3>
+              <p>Soal tentang pondasi, sloof, kolom, dan balok.</p>
+            </article>
+            <article class="quiz-card">
+              <h3>🧱 Dinding</h3>
+              <p>Soal tentang pemasangan dinding, plesteran, dan finishing.</p>
+            </article>
+            <article class="quiz-card">
+              <h3>⚡ Utilitas</h3>
+              <p>Soal tentang listrik, air, dan instalasi bangunan.</p>
+            </article> -->
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <strong>SMKN 2 Surabaya</strong>
+          <p>Platform pembelajaran konstruksi yang modern dan interaktif.</p>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Fullscreen Modals -->
+    <!-- Leveling Modal -->
+    <div class="modal-overlay" id="leveling-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">📐 Pekerjaan Leveling dan Uitzet</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Setelah perencanaan selesai dan izin bangunan (PBG/IMB) telah diterbitkan, maka pekerjaan di lapangan dapat dimulai dengan tahap persiapan yang sangat penting, yaitu pekerjaan <strong>leveling</strong> dan <strong>pengukuran lapangan (uitzet)</strong>.
+          </p>
+          <br/>
+          <p>Pada tahap ini, tim pelaksana (biasanya mandor atau surveyor) melakukan pengukuran dan penandaan secara akurat di lapangan sesuai dengan gambar kerja yang telah disusun pada tahap Construction Drawing. Pekerjaan leveling bertujuan untuk menentukan ketinggian (elevasi) tanah yang tepat, sehingga pondasi dan struktur bangunan dapat dibuat rata dan sesuai rencana. Sedangkan pekerjaan uitzet (staking out) adalah proses penancapan patok-patok kayu atau besi di tanah untuk menandai batas-batas bangunan, sumbu ruangan, garis pondasi, serta posisi kolom dan dinding.</p>
+          <br/>
+          <p>Fungsi utama dari pekerjaan leveling dan uitzet adalah memastikan bahwa posisi dan dimensi rumah di lapangan benar-benar sesuai dengan gambar desain, menghindari kesalahan ukuran yang dapat menyebabkan pemborosan material atau bahkan perubahan ulang struktur di kemudian hari. Alat yang biasa digunakan antara lain waterpass, theodolite, meteran laser, dan patok uitzet.</p>
+          <br/>
+          <p>Hasil dari tahap ini adalah lahan yang sudah “ditandai” dengan jelas, siap untuk tahap selanjutnya yaitu pembersihan lahan dan penggalian pondasi. Apabila leveling dan uitzet dilakukan dengan teliti, seluruh proses pembangunan rumah akan berjalan lebih lancar dan akurat.</p>
+          <br/>
+          <div style="text-align:center; margin-bottom:2rem;">
+            <img src="Leveling.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+          </div>
+          
+          <!-- <h4>Alat & Spesifikasi</h4> -->
+          <!-- <table>
+            <thead>
+              <tr>
+                <th>Alat</th>
+                <th>Fungsi</th>
+                <th>Spesifikasi</th>
+              </tr>
+            </thead> -->
+            <!-- <tbody>
+              <tr><td>Waterpass</td><td>Kesleran permukaan</td><td>Panjang 1-2m, akurasi 0.5mm/m</td></tr>
+              <tr><td>Theodolite</td><td>Sudut & jarak</td><td>Presisi 20"</td></tr>
+              <tr><td>Meteran Laser</td><td>Jarak akurat</td><td>50m, ±1.5mm</td></tr>
+              <tr><td>Patok Uitzet</td><td>Penandaan</td><td>30x30cm bambu/besi</td></tr>
+            </tbody> -->
+          <!-- </table> -->
+          <!-- <h2>Tahapan Kerja</h2>
+          <ol>
+            <li>Ukur titik acuan bangunan</li>
+            <li>Tandai garis pondasi</li>
+            <li>Patok sumbu kolom</li>
+            <li>Verifikasi ukuran</li> -->
+          <!-- </ol> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Pondasi Modal -->
+    <div class="modal-overlay" id="pondasi-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🏗️ Pekerjaan Galian Tanah</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+        <p>Setelah lahan telah ditandai dengan akurat melalui proses leveling dan uitzet, tahap berikutnya yang dilakukan adalah pekerjaan galian tanah. Pada tahap ini, tanah di area yang telah ditentukan digali sesuai dengan kedalaman, lebar, dan bentuk yang tercantum dalam gambar kerja. Galian dilakukan untuk membuat ruang pondasi, sloof, dan kolom, serta saluran drainase jika diperlukan.</p>
+        <br/>
+        <p>Pekerjaan galian tanah memiliki fungsi yang sangat penting, yaitu membentuk dasar bangunan yang stabil, menghilangkan lapisan tanah yang tidak kuat (tanah lunak atau humus), serta menyiapkan tempat untuk pemasangan pondasi yang akan menahan seluruh beban rumah. Proses ini harus dilakukan dengan hati-hati agar kedalaman galian tidak melebihi atau kurang dari yang direncanakan, karena kesalahan kecil dapat memengaruhi kekuatan struktur secara keseluruhan.</p>
+        <br/>
+        <p>Pekerjaan biasanya dilakukan secara manual dengan cangkul dan sekop untuk rumah skala kecil, atau menggunakan alat berat seperti excavator/backhoe untuk rumah yang lebih besar. Tanah hasil galian kemudian ditimbun sementara di luar area bangunan atau diangkut ke tempat pembuangan yang sesuai.</p>  
+        <br/>
+        <p>Hasil dari pekerjaan galian tanah adalah lubang galian yang telah bersih, rata, dan siap untuk tahap selanjutnya, yaitu pemasangan pondasi atau pekerjaan sub-struktur. Dengan demikian, pekerjaan galian tanah menjadi jembatan penting antara persiapan lahan dan pembangunan struktur utama rumah.</p>
+        <br/>
+        <div style="text-align:center; margin-bottom:2rem;">
+            <img src="Galian Tanah.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+          </div>
+          <!-- <h2>Jenis Pondasi</h2> -->
+          <!-- <table>
+            <thead>
+              <tr>
+                <th>Jenis</th>
+                <th>Kedalaman</th>
+                <th>Lebar</th>
+                <th>Penggunaan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Ujung</td><td>60-80cm</td><td>40cm</td><td>Tanah keras</td></tr>
+              <tr><td>Tapak</td><td>100+cm</td><td>60x60cm</td><td>Beban berat</td></tr>
+              <tr><td>Jalur</td><td>60cm</td><td>30cm</td><td>Dinding rata</td></tr>
+              <tr><td>Jalur Tebal</td><td>100cm</td><td>50cm</td><td>Struktur kritis</td></tr>
+            </tbody>
+          </table>
+          <p><strong>Penting:</strong> Galian pondasi harus sesuai gambar kerja!</p> -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Beton Modal -->
+    <div class="modal-overlay" id="beton-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🏢 Pekerjaan Pondasi</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Setelah memahami konsep perencanaan dan fungsi rumah tinggal, sekarang kita masuk ke tahap pelaksanaan yang sangat penting, yaitu <strong>pekerjaan pemasangan pondasi</strong>  (sub struktur).</p>
+          <br/>
+          <p>Pondasi adalah “kaki” dari seluruh bangunan rumah. Ia berfungsi menopang beban rumah, menahan guncangan tanah, dan mencegah bangunan miring atau ambles. Jika pondasi tidak kuat, seluruh rumah bisa retak atau bahkan roboh meskipun dinding dan atapnya sudah bagus. Oleh karena itu, pekerjaan pondasi harus dilakukan dengan sangat teliti dan sesuai gambar desain.</p>
+          <br/>
+          <strong >Pemasangan Pondasi:</strong>
+            <br/>
+            1.	Persiapan Lokasi Sebelum memasang pondasi, lahan sudah dibersihkan dan diratakan. Tukang mengukur ulang posisi pondasi sesuai gambar arsitek. Tanda batas pondasi dibuat dengan patok dan benang agar posisinya tepat.
+            <br/>
+            2.	Penggalian Tanah Tanah digali sesuai kedalaman dan lebar yang direncanakan. Kedalaman pondasi biasanya antara 60 cm hingga 1,5 meter, tergantung jenis tanah dan beban rumah. Jika tanahnya lembek, digali lebih dalam agar pondasi mencapai tanah yang keras.
+            <br/>
+            3.	Pemasangan Bekisting (Cetakan) Bekisting terbuat dari papan kayu atau multiplek yang dibentuk seperti kotak untuk menahan beton nanti. Bekisting dipasang rapi agar bentuk pondasi lurus dan kuat.
+            <br/>
+            4.	Pemasangan Besi Tulangan Besi beton (tulangan) dipasang di dalam bekisting membentuk rangka yang kuat. Besi ini berfungsi agar pondasi tidak mudah retak saat menahan beban. Ukuran besi dan jarak antar besi sudah ditentukan dalam gambar struktur.
+            <br/>
+            5.	Pengecoran Beton Setelah besi dan bekisting siap, beton dicor (dituang) ke dalam bekisting. Beton biasanya dicampur dengan perbandingan yang tepat (semen, pasir, kerikil, dan air). Pengecoran dilakukan secara bertahap sambil dipadatkan agar tidak ada rongga udara.
+            <br/>
+            6.	Perawatan Awal (Curing) Setelah beton mengeras (minimal 7 hari), pondasi disiram air secara rutin agar beton semakin kuat. Bekisting baru dibongkar setelah beton benar-benar mengeras.
+            <br/>
+            <br/>
+           <strong>Jenis Pondasi yang Sering Digunakan untuk Rumah Tinggal:</strong> 
+            <br/>
+            •	Pondasi batu kali (untuk rumah sederhana di tanah yang cukup keras)
+            <br/>
+            •	Pondasi beton bertulang (paling umum dan kuat)
+            <br/>
+            •	Pondasi tiang pancang (jika tanah sangat lembek)
+            <br/>
+            <div style="text-align:center; margin-bottom:2rem;">
+              <img src="Pondasi 1.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+              <br/>
+              <br/>
+              <div style="text-align:center; margin-bottom:2rem;">
+                <img src="Pondasi 2 fix.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+                <br/>
+                <br/>
+              <div style="text-align:center; margin-bottom:2rem;">
+            <img src="Pondasi 3.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+            </p>
+
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Kolom Modal -->
+
+
+
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="dinding-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Sloof</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+                   <p>Sloof adalah balok beton bertulang yang dibuat secara horizontal dan biasanya terletak tepat di atas pondasi (atau langsung di atas tanah dasar untuk pondasi batu kali). Sloof berfungsi sebagai penghubung antara pondasi dengan kolom, sehingga seluruh struktur bangunan menjadi lebih kuat dan menyatu.
+          <br/>
+          <br/>
+          <strong>Fungsi Utama Sloof:</strong>
+          <br/>
+          <br/>
+          1.	Menghubungkan dan mengikat seluruh pondasi agar tidak bergeser.
+          <br/>
+          2.	Menahan gaya tekan dan gaya tarik dari kolom.
+          <br/>
+          3.	Mencegah terjadinya retak atau pergeseran struktur akibat penurunan tanah (settlement).
+          <br/>
+          4.	Menjadi dasar pemasangan dinding dan kolom.
+          <br/>
+          5.	Mendistribusikan beban bangunan secara merata ke pondasi.
+          <br/>
+          <br/>
+          <strong>Tahapan Pekerjaan Sloof:</strong>
+          <br/>
+          1.	Persiapan Dasar Sloof
+          <br/>
+          •	Membersihkan dasar galian dari tanah lepas, lumpur, atau sampah.
+          <br/>
+          •	Meratakan dasar galian sesuai tinggi yang sudah ditentukan pada gambar kerja.
+          <br/>
+          •	Untuk sloof yang langsung di atas tanah, biasanya dibuat lapisan pasir setebal 5–10 cm sebagai alas.
+          <br/>
+          <br/>
+          2.	Pemasangan Bekisting (Cetakan)
+          <br/>
+          •	Bekisting sloof biasanya menggunakan papan kayu multiplek atau triplek tebal 12–18 mm.
+          <br/>
+          •	Dipasang di kedua sisi sloof dengan kuat dan tegak lurus.
+          <br/>
+          •	Lebar dan tinggi sloof mengikuti gambar kerja (contoh: ukuran umum 15 × 25 cm, 20 × 30 cm, atau 25 × 40 cm).
+          <br/>
+          <br/>
+          3.	Pemasangan Tulangan (Besi Beton)
+          <br/>
+          •	Tulangan utama sloof biasanya menggunakan besi polos atau besi ulir diameter 8 mm, 10 mm, atau 12 mm (4–6 batang).
+          <br/>
+          •	Dilengkapi dengan begel (stirrup) diameter 6 mm atau 8 mm dengan jarak 15–20 cm.
+          <br/>
+          •	Semua sambungan besi diikat dengan kawat bendrat.
+          <br/>
+          •	Jarak tulangan ke permukaan beton (cover) minimal 4 cm.
+          <br/>
+          <br/>
+          4.	Pengecoran Beton
+          <br/>
+          •	Mutu beton yang biasa digunakan untuk sloof adalah K-225 atau K-250.
+          <br/>
+          •	Pengecoran dilakukan secara kontinu (tidak berhenti di tengah) agar tidak ada sambungan dingin.
+          <br/>
+          •	Beton dipadatkan menggunakan vibrator atau digetok-getok dengan kayu agar tidak ada rongga.
+          <br/>
+          •	Permukaan atas sloof diratakan dan diberi tekstur kasar (agar kolom nantinya bisa melekat kuat).
+          <br/>
+          <br/>
+          5.	Perawatan (Curing)
+          <br/>
+          •	Setelah cor, sloof harus ditutup dengan terpal atau karung basah minimal 7 hari.
+          <br/>
+          •	Disiram air setiap hari agar beton tidak retak karena cepat kering.
+          <br/>
+           <div style="text-align:center; margin-bottom:2rem;">
+            <img src="Sloof.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Kolom Modal -->
+    <div class="modal-overlay" id="kolom-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Kolom</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Kolom</strong> adalah balok beton bertulang yang berdiri tegak lurus, menghubungkan sloof (atau pondasi) dengan balok atas atau plat lantai. Kolom berfungsi meneruskan seluruh beban bangunan ke bawah hingga ke pondasi.
+            <br/>
+            <br/>
+            <strong>Fungsi Utama Kolom:</strong>
+            <br/>
+            <br/>
+            1.	Menyangga beban vertikal dari lantai, dinding, dan atap.
+            <br/>
+            2.	Menahan gaya tekan (kompresi) dan gaya geser.
+            <br/>
+            3.	Menjaga kestabilan bangunan terhadap angin dan gempa.
+            <br/>
+            4.	Menjadi kerangka utama bangunan sehingga dinding tidak roboh.
+            <br/>
+            5.	Menentukan ketinggian ruangan dan bentuk struktur secara keseluruhan.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan Kolom:</strong>
+            <br/>
+            <br/>
+            1.	Persiapan dan Pemasangan Tulangan Kolom
+            <br/>
+            •	Membersihkan permukaan sloof dari kotoran dan debu.
+            <br/>
+            •	Memasang tulangan kolom (besi utama) sesuai gambar kerja.
+            <br/>
+            •	Ukuran besi kolom biasanya Ø10 mm, Ø12 mm, atau Ø16 mm (4–8 batang tergantung beban).
+            <br/>
+            •	Dilengkapi dengan begel (stirrup) Ø8 mm dengan jarak 10–15 cm di ujung dan 20–25 cm di tengah.
+            <br/>
+            •	Tulangan kolom harus diikat kuat dengan kawat bendrat dan disambung dengan metode lapis (overlap) minimal 40× diameter besi.
+            <br/>
+            <br/>
+            2.	Pemasangan Bekisting Kolom
+            <br/>
+            •	Bekisting kolom biasanya menggunakan triplek 18 mm atau papan kayu yang kuat.
+            <br/>
+            •	Dipasang tegak lurus dengan bantuan waterpass atau benang tegak.
+            <br/>
+            •	Ukuran kolom umum untuk rumah tinggal: 15×15 cm, 20×20 cm, atau 25×25 cm.
+            <br/>
+            •	Diberi pengaku (bracing) agar bekisting tidak bergeser saat pengecoran.
+            <br/>
+            <br/>
+            3.	Pengecoran Beton Kolom
+            <br/>
+            •	Mutu beton yang direkomendasikan: K-250 atau K-300.
+            <br/>
+            •	Pengecoran dilakukan secara bertahap (layer per layer) maksimal 1,5 meter per tahap agar tidak ada rongga.
+            <br/>
+            •	Beton dipadatkan dengan vibrator agar padat dan homogen.
+            <br/>
+            •	Kolom cor secara kontinu dari bawah ke atas tanpa sambungan dingin jika memungkinkan.
+            <br/>
+            <br/>
+            4.	Pembongkaran Bekisting dan Perawatan
+            <br/>
+            •	Bekisting kolom dapat dibongkar setelah 3–7 hari (tergantung cuaca).
+            <br/>
+            •	Kolom dirawat (curing) dengan disiram air minimal 7 hari atau ditutup karung basah.
+            <br/>
+            •	Permukaan kolom diperiksa apakah ada sarang lebah atau retak.
+            <br/>
+            <br/>
+<div style="text-align:center; margin-bottom:2rem;">
+              <img src="kolom.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="balok-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Balok</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p>Balok adalah beton bertulang yang dipasang secara horizontal, menghubungkan antar kolom. Balok berfungsi sebagai “tulang punggung” horizontal yang menerima beban dari plat lantai atau rangka atap dan meneruskannya ke kolom.
+          <br/>
+          <br/>
+          Fungsi Utama Balok
+          <br/>
+          <br/>
+          1.	Menahan beban lentur (tekuk) dan gaya geser.
+          <br/>
+          2.	Mengikat kolom-kolom agar bangunan menjadi satu kesatuan yang kuat.
+          <br/>
+          3.	Menyangga plat lantai (untuk rumah bertingkat) atau rangka atap.
+          <br/>
+          4.	Mencegah terjadinya lendutan berlebih pada lantai.
+          <br/>
+          5.	Menjaga kestabilan struktur terhadap gempa dan beban angin.
+          <br/>
+          <br/>
+          Tahapan Pekerjaan Balok
+          <br/>
+          <br/>
+          1.	Persiapan dan Pemasangan Tulangan Balok
+          <br/>
+          •	Membersihkan permukaan atas kolom dan memasang dowel (sambungan besi) dari kolom ke balok.
+          <br/>
+          •	Memasang tulangan utama balok (biasanya besi Ø12 mm – Ø16 mm, 4–6 batang atas dan bawah).
+          <br/>
+          •	Memasang begel/stirrup Ø8 mm atau Ø10 mm dengan jarak 10–15 cm di ujung (daerah tumpuan) dan 20–25 cm di tengah.
+          <br/>
+          •	Semua sambungan diikat dengan kawat bendrat, dan diberi cover beton minimal 4 cm.
+          <br/>
+          <br/>
+          2.	Pemasangan Bekisting Balok
+          <br/>
+          •	Bekisting bawah (soffit) menggunakan triplek 18 mm yang disangga dengan perancah (scaffolding) yang kuat.
+          <br/>
+          •	Bekisting samping dipasang tegak dan diikat kuat.
+          <br/>
+          •	Ukuran balok umum untuk rumah tinggal:
+          <br/>
+          •	Balok induk (utama) : 20×30 cm atau 25×40 cm
+          <br/>
+          •	Balok anak (sekunder) : 15×25 cm atau 20×30 cm
+          <br/>
+          •	Pastikan permukaan bekisting rata dan diberi minyak bekisting agar mudah dibongkar.
+          <br/>
+          <br/>
+          3.	Pengecoran Beton Balok
+          <br/>
+          •	Mutu beton yang digunakan: K-250 sampai K-300.
+          <br/>
+          •	Pengecoran dilakukan secara bersamaan dengan plat lantai jika memungkinkan (monolithic casting) agar lebih kuat.
+          <br/>
+          •	Beton dipadatkan dengan vibrator secara menyeluruh, terutama di sudut-sudut bekisting.
+          <br/>
+          •	Permukaan atas balok diratakan dan dibuat kasar untuk melekat dengan plat lantai.
+          <br/>
+          <br/>
+          4.	Pembongkaran Bekisting dan Perawatan
+          <br/>
+          •	Bekisting samping boleh dibongkar setelah 3–7 hari.
+          <br/>
+          •	Bekisting bawah (soffit) dibiarkan minimal 14–21 hari tergantung beban.
+          <br/>
+          •	Balok dirawat dengan cara disiram air setiap hari selama minimal 7 hari atau ditutup karung basah.
+          <br/>
+          <br/>
+           <div style="text-align:center; margin-bottom:2rem;">
+            <img src="balok.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="dinding1-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Dinding</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Dinding</strong> adalah bidang vertikal yang dibangun di antara kolom dan balok untuk membatasi ruangan, menahan cuaca, serta memberikan kenyamanan dan keamanan penghuni. Pada rumah tinggal, dinding biasanya menggunakan bata merah, bata ringan (hebel), atau batako.
+          <br/>
+          <br/>
+          <strong>Fungsi Utama Dinding:</strong>
+          <br/>
+          1.	Membagi ruangan sesuai denah (kamar tidur, ruang tamu, dapur, dll).
+          <br/>
+          2.	Menahan beban angin dan cuaca (kedap air & angin).
+          <br/>
+          3.	Memberikan kekedapan suara antar ruangan.
+          <br/>
+          4.	Sebagai penutup struktur (kolom & balok) agar terlihat rapi.
+          <br/>
+          5.	Menahan beban ringan (gantungan, rak, dll).
+          <br/>
+          <br/>
+          <strong>Tahapan Pekerjaan Dinding:</strong>
+          <br/>
+          1.	Persiapan Pekerjaan Dinding
+          <br/>
+          •	Membersihkan kolom, balok, dan sloof dari sisa bekisting dan kotoran.
+          <br/>
+          •	Membasahi permukaan kolom dan balok agar mortar melekat kuat.
+          <br/>
+          •	Memasang benang dinding (guide line) menggunakan waterpass untuk memastikan dinding tegak dan rata.
+          <br/>
+          <br/>
+          2.	Pemasangan Dinding Bata
+          <br/>
+          <strong>Jenis bahan yang umum:</strong>
+          <br/>
+          •	Bata merah (ukuran 5×10×20 cm)
+          <br/>
+          •	Bata ringan / hebel (ukuran 7,5×20×60 cm)
+          <br/>
+          •	Batako press (ukuran 10×20×40 cm)
+          <br/>
+          •	Pasang dinding mulai dari sloof ke atas dengan pola ikatan (flemish bond atau stretcher bond).
+          <br/>
+          •	Tebal dinding biasanya ½ bata (10 cm) atau 1 bata (20 cm).
+          <br/>
+          •	Gunakan mortar (campuran semen : pasir = 1 : 4 atau 1 : 5).
+          <br/>
+          •	Pasang kolom praktis (tie beam) setiap tinggi 1 meter untuk mengikat dinding dengan kolom.
+          <br/>
+          <br/>
+          3.	Pemasangan Kusen dan Rangka
+          <br/>
+          •	Pasang kusen pintu dan jendela sesuai ukuran gambar saat dinding mencapai tinggi kusen.
+          <br/>
+          •	Beri sloof atas (ring balk) di atas dinding sebelum balok atap.
+          <br/>
+          <br/>
+          4.	Penyelesaian Dinding
+          <br/>
+          •	Ratakan permukaan dinding dengan acian (semen tipis) atau plesteran.
+          <br/>
+          •	Untuk dinding kamar mandi, pasang waterproofing sebelum keramik.
+          <br/>
+          •	Biarkan dinding kering minimal 7 hari sebelum dilakukan pekerjaan finishing.
+          <br/>
+          <br/>
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="kusen-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🪟 Pekerjaan Kusen, Daun Pintu, dan Daun Jendela</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p> •  <strong>Kusen</strong> adalah bingkai (frame) yang dipasang permanen pada dinding sebagai tempat pemasangan daun pintu dan jendela.
+             <br/>
+             •	<strong></strong>Daun Pintu</strong> dan <strong>Daun Jendela</strong> adalah bagian yang dapat dibuka-tutup.
+             <br/>
+             <br/>
+             <strong>Fungsi Utama:</strong>
+             <br/>
+             1.	Membentuk bukaan untuk akses masuk/keluar dan sirkulasi udara & cahaya.
+             <br/>
+             2.	Menjaga keamanan dan privasi penghuni.
+             <br/>
+             3.	Melindungi ruangan dari hujan, angin, debu, dan serangga.
+             <br/>
+             4.	Menambah nilai estetika bangunan.
+             <br/>
+             <strong>Tahapan Pekerjaan (Setelah Dinding Selesai)</strong>
+             <br/>
+             <br/>
+             <strong>1. Pemasangan Kusen</strong>
+             <br/>
+             •	Kusen biasanya terbuat dari kayu meranti/kamper atau aluminium.
+             <br/>
+             •	Ukuran umum:
+             <br/>
+             •	Kusen pintu : 5 × 10 cm atau 5,5 × 11 cm
+             <br/>
+             •	Kusen jendela : 4 × 8 cm atau 5 × 10 cm
+             <br/>
+             •	Kusen dipasang pada bukaan dinding yang sudah disediakan.
+             <br/>
+             •	Diikat kuat menggunakan angker besi (plat besi 4×30 cm) yang ditanam ke dalam dinding setiap 50–60 cm.
+             <br/>
+             •	Diperiksa menggunakan waterpass agar benar-benar tegak, rata, dan sejajar.
+             <br/>
+             •	Celah antara kusen dan dinding ditutup rapat dengan mortar atau busa polyurethane.
+             <br/>
+             <br/>
+             <strong>2. Pemasangan Daun Pintu</strong>
+             <br/>
+             •	Daun pintu dipasang pada kusen menggunakan engsel (minimal 3 buah per daun).
+             <br/>
+             •	Ukuran standar pintu utama: 80 × 210 cm atau 90 × 210 cm.
+             <br/>
+             •	Dipasang handle, kunci, dan door stopper.
+             <br/>
+             •	Celah antara daun pintu dan kusen dijaga merata (±2–3 mm).
+             <br/>
+             <br/>
+             <strong>3. Pemasangan Daun Jendela</strong>
+             <br/>
+             •	Daun jendela (sorong, ayun, atau kaca tetap) dipasang pada kusen.
+             <br/>
+             •	Biasanya menggunakan rangka aluminium dengan kaca 5 mm.
+             <br/>
+             •	Dilengkapi engsel, kunci jendela, dan karet seal agar kedap air dan angin.
+             <br/>
+             <br/>
+             <strong>4. Finishing</strong>
+             <br/>
+             •	Kusen dan daun pintu/jendela diberi cat dasar (primer) agar terlindungi selama proses pembangunan selanjutnya.
+             <br/>
+             <br/>
+
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="plester-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Dinding</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p>
+             <strong>•	Plesteran :</strong> Lapisan mortar (campuran semen + pasir) yang dioleskan pada permukaan dinding bata dengan ketebalan 1,5–2 cm untuk meratakan dinding dan menutup pori-pori bata.
+             <br/>
+             <strong>•	Acian :</strong> Lapisan akhir yang sangat tipis (2–3 mm) dari campuran semen + pasir halus yang dioleskan di atas plesteran untuk menghasilkan permukaan yang halus dan siap dicat.
+             <br/>
+             <br/>
+             <strong>Fungsi Utama Plesteran dan Acian</strong>
+             <br/>
+             <br/>
+             1.	Meratakan permukaan dinding yang kasar dari bata.
+             <br/>
+             2.	Menutup retak kecil dan pori-pori agar tidak tembus air.
+             <br/>
+             3.	Meningkatkan daya rekat cat atau keramik.
+             <br/>
+             4.	Memberikan tampilan estetika yang rapi dan indah.
+             <br/>
+             5.	Melindungi dinding dari kelembaban dan kerusakan.
+             <br/>
+             <br/>
+             <strong>Tahapan Pekerjaan Plesteran dan Acian:</strong>
+             <br/>
+             <br/>
+             <strong>1.	Persiapan Permukaan Dinding</strong> 
+             <br/>
+             •	Membersihkan dinding dari debu, sisa mortar, dan kotoran.
+             <br/>
+             •	Membasahi dinding dengan air (jangan terlalu basah) agar mortar tidak cepat kering.
+             <br/>
+             •	Memasang list plester (panduan ketebalan) di sudut-sudut dan tiang menggunakan semen.
+             <br/>
+             <br/>
+             <strong>2.	Pekerjaan Plesteran</strong>
+             <br/>
+             •	Campuran mortar plester biasanya : Semen : Pasir = 1 : 4 atau 1 : 5.
+             <br/>
+             •	Tebal plesteran 1,5–2 cm (untuk dinding dalam) dan 2–2,5 cm (untuk dinding luar).
+             <br/>
+             •	Oleskan mortar dari bawah ke atas menggunakan cetok, lalu ratakan dengan mistar atau roskam.
+             <br/>
+             •	Biarkan plesteran mengeras selama 1–2 hari sebelum dilakukan acian.
+             <br/>
+             <br/>
+             <strong>3.	Pekerjaan Acian</strong>
+             <br/>
+             •	Campuran acian : Semen + pasir halus (pasir ayakan) dengan perbandingan 1 : 2 atau 1 : 3.
+             <br/>
+             •	Tebal lapisan hanya 2–3 mm.
+             <br/>
+             •	Dioleskan dengan roskam besi sambil ditekan agar rata dan mengkilap.
+             <br/>
+             •	Dikerjakan saat plesteran masih agak basah (fresh on fresh) atau setelah dibasahi lagi.
+             <br/>
+             <br/>
+            <strong> 4.	Perawatan (Curing)</strong>
+             <br/>
+             •	Siram permukaan plester dan acian dengan air minimal 3–7 hari.
+             <br/>
+             •	Lindungi dari sinar matahari langsung dengan terpal agar tidak retak.</p>
+             <br/>
+             <br/>
+              <div style="text-align:center; margin-bottom:2rem;">
+            <img src="dinding.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="lantai-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Lantai</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Pekerjaan </strong>lantai adalah proses pembuatan permukaan dasar dan finishing lantai ruangan agar rata, kuat, kedap air, dan indah. Untuk rumah tinggal biasanya terdiri dari lantai dasar (rabat beton) dan lapisan finishing (keramik, homogenus tile, atau granit).
+            <br/>
+            <br/>
+            <strong>Fungsi Utama Pekerjaan Lantai:</strong>
+            <br/>
+            <br/>
+            1.	Menghasilkan permukaan yang rata dan kuat untuk diinjak.
+            <br/>
+            2.	Mencegah naiknya air tanah dan kelembaban ke dalam ruangan.
+            <br/>
+            3.	Memberikan kenyamanan dan keindahan ruangan.
+            <br/>
+            4.	Menahan beban perabotan dan aktivitas penghuni.
+            <br/>
+            5.	Meningkatkan higiene dan kemudahan pembersihan.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan Lantai:</strong>
+            <br/>
+            <br/>
+            1.	Persiapan Dasar Lantai
+            <br/>
+            •	Membersihkan area lantai dari sisa material, puing, dan tanah lepas.
+            <br/>
+            •	Melakukan urugan tanah (jika perlu) setebal 20–30 cm dan dipadatkan dengan stamper.
+            <br/>
+            •	Membuat lapisan pasir urug setebal 5–10 cm dan diratakan.
+            <br/>
+            <br/>
+            2.	Pengecoran Rabat Beton (Lantai Dasar)
+            <br/>
+            •	Tebal rabat beton biasanya 5–8 cm.
+            <br/>
+            •	Campuran beton K-150 atau 1 : 3 : 5 (semen : pasir : kerikil).
+            <br/>
+            •	Dipasang wiremesh Ø4 mm atau Ø5 mm dengan jarak 15–20 cm untuk memperkuat.
+            <br/>
+            •	Diratakan dengan mistar dan dibuat miring (1–2%) ke arah saluran pembuangan pada area basah (kamar mandi, dapur, teras).
+            <br/>
+            <br/>
+            3.	Pemasangan Finishing Lantai
+            <br/>
+            •	Pasang keramik, homogenus tile, atau granit sesuai desain.
+            <br/>
+            •	Gunakan perekat keramik (mortar tile adhesive) dengan perbandingan yang tepat.
+            <br/>
+            •	Beri nat (sambungan) 2–3 mm dan diisi dengan grout/nat keramik.
+            <br/>
+            •	Untuk lantai kamar mandi dan dapur, pasang waterproofing terlebih dahulu.
+            <br/>
+            <br/>
+            4.	Perawatan Lantai
+            <br/>
+            •	Lindungi lantai baru dengan terpal atau kardus selama 3–7 hari.
+            <br/>
+            •	Jangan diinjak berat sebelum keramik merekat sempurna (minimal 48 jam).
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="Lantai.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="rangkaatap-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Rangka Atap</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Rangka Atap</strong> adalah kerangka struktural yang dibuat untuk menopang beban atap, menahan angin, hujan, serta memberikan kemiringan agar air dapat mengalir. Untuk rumah tinggal biasanya menggunakan rangka kayu atau baja ringan (truss).
+            <br/>
+            <br/>
+            <strong>Fungsi Utama Rangka Atap</strong>
+            <br/>
+            <br/>
+            1.	Menopang seluruh beban penutup atap, plafon, dan beban angin.
+            <br/>
+            2.	Memberikan kemiringan atap sesuai desain.
+            <br/>
+            3.	Mengikat seluruh dinding atas (ring balk) agar bangunan lebih kokoh.
+            <br/>
+            4.	Menentukan bentuk dan model atap (pelana, limasan, joglo, dll).
+            <br/>
+            5.	Menjadi dasar pemasangan plafon dan instalasi listrik.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan Rangka Atap:</strong>
+            <br/>
+            <br/>
+            1.	Persiapan dan Pengukuran
+            <br/>
+            •	Memeriksa ukuran balok atas (ring balk) dan memastikan sudah rata dan kuat.
+            <br/>
+            •	Membuat sketsa atau menggunakan gambar kerja untuk menentukan panjang, kemiringan, dan jarak kuda-kuda.
+            <br/>
+            •	Menyiapkan semua bahan di bawah sebelum diangkat.
+            <br/>
+            <br/>
+            2.	Pembuatan Kuda-Kuda
+            <br/>
+            •	Kuda-kuda adalah segitiga utama rangka atap.
+            <br/>
+            •	Bahan yang umum:
+            <br/>
+            •	Kayu kelas II/III (meranti, kamper, borneo) ukuran 5×10 cm atau 6×12 cm.
+            <br/>
+            •	Atau Baja Ringan (C-channel 75 × 45 mm).
+            <br/>
+            •	Dipotong dan dirakit di tanah sesuai sudut kemiringan (biasanya 25°–35°).
+            <br/>
+            •	Sambungan menggunakan baut, mur, plat besi, atau paku.
+            <br/>
+            <br/>
+            3.	Pemasangan Rangka Atap
+            <br/>
+            •	Mengangkat kuda-kuda dan memasangnya di atas ring balk dengan jarak 60–120 cm.
+            <br/>
+            •	Memasang nok (puncak), gording (horizontal), dan kasau (penyangga genteng).
+            <br/>
+            •	Memasang talang air sementara dan ridge cap.
+            <br/>
+            •	Semua sambungan diperkuat dengan angker besi dan baut.
+            <br/>
+            <br/>
+            4.	Penguatan dan Finishing
+            <br/>
+            •	Memasang diagonal bracing untuk menahan gaya angin.
+            <br/>
+            •	Memasang lisplang (penutup tepi atap).
+            <br/>
+            •	Memeriksa seluruh rangka agar tidak ada yang miring atau melendut.</p>
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="atap.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="plafon-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Plafon</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Plafon</strong> adalah bidang horizontal yang dipasang di bawah rangka atap untuk menutup bagian atas ruangan. Plafon modern biasanya menggunakan rangka hollow besi ringan dan bahan penutup seperti gypsum board, triplek, atau PVC.
+            <br/>
+            <br/>
+            <strong>Fungsi Utama Plafon:</strong>
+            <br/>
+            <br/>
+            1.	Menutup rangka atap dan instalasi listrik agar ruangan terlihat rapi.
+            <br/>
+            2.	Meningkatkan estetika dan kesan bersih ruangan.
+            <br/>
+            3.	Membantu mengurangi panas dari atap (terutama jika ada insulasi).
+            <br/>
+            4.	Menahan suara dan debu dari atas.
+            <br/>
+            5.	Menjadi tempat pemasangan lampu, kipas angin, dan AC.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan Plafon:</strong>
+            <br/>
+            1.	Persiapan Rangka Plafon
+            <br/>
+            •	Memasang rangka utama (runner) dan rangka sekunder (hat channel / hollow 4×2 cm atau 6×2 cm).
+            <br/>
+            •	Jarak rangka sekunder biasanya 40–60 cm.
+            <br/>
+            •	Menggunakan gantungan (hanger) dari kawat atau besi hollow yang ditanam ke rangka atap.
+            <br/>
+            •	Diperiksa kerataan dan ketinggian plafon menggunakan waterpass atau laser level.
+            <br/>
+            <br/>
+            2.	Pemasangan Bahan Penutup
+            <br/>
+            •	Jenis plafon yang umum:
+            <br/>
+            •	Gypsum board (tebal 9 mm atau 12 mm) — paling populer.
+            <br/>
+            •	Triplek / MDF.
+            <br/>
+            •	PVC / kalsiboard (untuk area basah).
+            <br/>
+            •	Lembaran dipasang dengan sekrup khusus dan sambungan ditutup dengan compound + tape.
+            <br/>
+            •	Dipasang list plafon (cornice) di tepi pertemuan dinding dan plafon.
+            <br/>
+            <br/>
+            3.	Pemasangan Aksesoris
+            <br/>
+            •	Membuat lubang untuk lampu downlight, kipas angin, atau exhaust fan.
+            <br/>
+            •	Memasang insulation (glasswool atau rockwool) di atas plafon jika diperlukan untuk peredam panas dan suara.
+            <br/>
+            •	Finishing sambungan dengan acian halus agar rata dan tidak terlihat retak.
+            <br/>
+            <br/>
+            4.	Finishing Plafon
+            <br/>
+            •	Dicat dengan cat tembok (emulsi) warna putih atau sesuai desain.
+            <br/>
+            •	Dibersihkan dari debu dan sisa compound.
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="plafon.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="mep-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan MEP</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>MEP</strong> adalah singkatan dari:
+            <br/>
+            <br/>
+            •	<strong>M</strong>echanical (AC, exhaust, ventilasi)
+            <br/>
+            •	<strong>E</strong>lectrical (instalasi listrik)
+            <br/>
+            •	<strong>P</strong>lumbing (instalasi air bersih, air kotor, dan gas)
+            <br/>
+            <br/>
+            Pekerjaan ini biasanya terbagi menjadi <strong>Rough In</strong> (instalasi tersembunyi) dan <strong>Finishing</strong> (pemasangan perlengkapan).
+            <br/>
+            <strong>Fungsi Utama Pekerjaan MEP:</strong>
+            <br/>
+            <br/>
+            1.	Menyediakan listrik, penerangan, dan stop kontak.
+            <br/>
+            2.	Menyediakan air bersih dan pembuangan air kotor.
+            <br/>
+            3.	Mengatur sirkulasi udara dan suhu ruangan.
+            <br/>
+            4.	Menjamin keamanan (proteksi hubung singkat, grounding).
+            <br/>
+            5.	Mendukung kenyamanan penghuni sehari-hari.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan MEP:</strong>
+            <br/>
+            <br/>
+            1.	Pekerjaan Plumbing (Instalasi Pipa)
+            <br/>
+            •	Pasang pipa air bersih (PVC/PPR) dari toren/reservoir ke setiap titik (washtafel, shower, keran).
+            <br/>
+            •	Pasang pipa air kotor dan drainase (WC, washtafel, floor drain).
+            <br/>
+            •	Pasang pipa ventilasi dan septic tank.
+            <br/>
+            •	Semua pipa ditanam di dalam dinding (chasing) atau di atas plafon.
+            <br/>
+            <br/>
+            2.	Pekerjaan Electrical (Instalasi Listrik)
+            <br/>
+            •	Pasang kabel listrik (NYM 2×2,5 mm² & 2×4 mm²) sesuai gambar instalasi.
+            <br/>
+            •	Pasang kotak kontak, saklar, lampu, dan MCB dalam panel listrik.
+            <br/>
+            •	Pasang grounding (pentanahan) untuk keamanan.
+            <br/>
+            •	Pasang instalasi intercom, TV, internet, dan doorbell jika ada.
+            <br/>
+            <br/>
+            3.	Pekerjaan Mechanical
+            <br/>
+            •	Pasang ducting AC (jika menggunakan AC sentral).
+            <br/>
+            •	Pasang exhaust fan di kamar mandi dan dapur.
+            <br/>
+            •	Pasang ventilasi alami dan chimney jika diperlukan.
+            <br/>
+            <br/>
+            4.	Finishing MEP
+            <br/>
+            •	Pasang fitting akhir: stop kontak, saklar, lampu, shower, kloset, washtafel, keran, dll.
+            <br/>
+            •	Testing seluruh sistem (tekanan air, fungsi listrik, kebocoran).
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="mep1.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="mep2.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+    <!-- Dinding Modal -->
+    <div class="modal-overlay" id="finishing-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">🧱 Pekerjaan Finishing</h1>
+          <button class="modal-close" aria-label="Tutup">×</button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Pekerjaan Finishing</strong> adalah rangkaian pekerjaan akhir untuk memberikan penampilan yang indah, rapi, bersih, dan siap huni. Meliputi pengecatan, pemasangan perlengkapan, serta pembersihan akhir.
+            <br/>
+            <br/>
+            <strong>Fungsi Utama Pekerjaan Finishing:</strong>
+            <br/>
+            <br/>
+            1.	Memberikan tampilan akhir yang menarik dan sesuai desain.
+            <br/>
+            2.	Melindungi permukaan bangunan dari cuaca dan kerusakan.
+            <br/>
+            3.	Meningkatkan kenyamanan dan nilai jual rumah.
+            <br/>
+            4.	Menyelesaikan seluruh detail kecil agar rumah terlihat sempurna.
+            <br/>
+            <br/>
+            <strong>Tahapan Pekerjaan Finishing</strong>
+            <br/>
+            1.	Pengecatan Interior & Eksterior
+            <br/>
+            o	Cat dasar (primer) dinding, plafon, kusen, dan pintu.
+            <br/>
+            o	Cat akhir (emulsi / acrylic) 2–3 lapis sesuai warna desain.
+            <br/>
+            o	Cat kayu / clear coat untuk kusen dan daun pintu-jendela.
+            <br/>
+            o	Cat waterproof untuk area basah (kamar mandi & dapur).
+            <br/>
+            <br/>
+            2.	Pemasangan Keramik Dinding (jika belum)
+            <br/>
+            o	Keramik dinding kamar mandi, dapur, dan area backsplash.
+            <br/>
+            o	Pasang list keramik / border sesuai desain.
+            <br/>
+            <br/>
+            3.	Pemasangan Perlengkapan & Aksesoris
+            <br/>
+            o	Handle pintu, kunci, stopper, engsel akhir.
+            <br/>
+            o	Lampu, stop kontak, saklar, cover listrik.
+            <br/>
+            o	Shower, kloset, washtafel, cermin, rak, tirai.
+            <br/>
+            o	List plint (skirting) di pertemuan lantai dan dinding.
+            <br/>
+            o	Handle pintu lemari, gagang laci, dll.
+            <br/>
+            <br/>
+            4.	Pekerjaan Finishing Luar
+            <br/>
+            o	Pengecatan fasad dan ornament luar.
+            <br/>
+            o	Pemasangan genteng (jika belum), lisplang, talang air, dan downpipe.
+            <br/>
+            o	Pembuatan carport, teras, pagar, dan lansekap sederhana.
+            <br/>
+            <br/>
+            5.	Pembersihan Akhir & Cleaning
+            <br/>
+            o	Membersihkan seluruh ruangan dari debu, cat, dan sisa material.
+            <br/>
+            o	Poles lantai keramik / granit.
+            <br/>
+            o	Pengecekan akhir seluruh sistem (listrik, air, pintu, jendela).
+            <br/>
+            <br/>
+             <div style="text-align:center; margin-bottom:2rem;">
+            <img src="finishing.jpg" alt="Referensi Leveling Lapangan" style="width:100%; max-width:600px; height:auto; border-radius:20px; box-shadow: var(--glow); display:block; margin:0 auto;">
+</p>
+
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <script>
+    // Particles BG
+    const canvas = document.getElementById('particles-bg');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      const particles = [];
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          r: Math.random() * 2 + 1,
+          alpha: Math.random() * 0.5 + 0.3
+        });
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.fillStyle = '#00f5ff';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+          
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+
+    // Fullscreen Modal + FIXED Button - Event Delegation
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.addEventListener('click', (e) => {
+        // Fullscreen modal triggers
+        // Fullscreen modal triggers - FIXED logic
+        let modalId = e.target.dataset.modal;
+        let modalTrigger = e.target.closest('[data-modal]');
+        if (modalTrigger) {
+          modalId = modalTrigger.dataset.modal || modalId;
+        }
+        if (modalId) {
+          const modal = document.getElementById(modalId);
+          if (modal) {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            console.log('Modal opened:', modalId); // Debug
+          } else {
+            console.log('Modal not found:', modalId); // Debug
+          }
+        }
+
+        // Modal close
+        if (e.target.matches('.modal-close') || e.target.closest('.modal-close')) {
+          e.target.closest('.modal-overlay').classList.remove('active');
+          document.body.style.overflow = '';
+          return;
+        }
+
+        // Overlay click close
+        if (e.target.classList.contains('modal-overlay')) {
+          e.target.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // ESC key close modals
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+          });
+        }
+      });
+
+      // Smooth Nav
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+          const target = document.querySelector(link.getAttribute('href'));
+          target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    });
+
+
+    // Navbar Active Scroll
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const sections = document.querySelectorAll('section[id]');
+          let current = '';
+          sections.forEach(section => {
+            if (window.scrollY >= section.offsetTop - 200) {
+              current = section.getAttribute('id');
+            }
+          });
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  </script>
+</body>
+</html>
+

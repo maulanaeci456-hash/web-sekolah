@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Load Script</title>
+</head>
+<body>
+    <h1>Testing Script.js Load</h1>
+    <p>Check browser console for any errors...</p>
+    
+    <!-- Minimal HTML untuk testing -->
+    <div id="material-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Test Title</h3>
+                <button id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">Test Content</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="Script.js"></script>
+    <script>
+        console.log("Script.js loaded successfully");
+        console.log("materiData keys:", Object.keys(materiData));
+        console.log("quizData keys:", Object.keys(quizData));
+    </script>
+</body>
+</html>

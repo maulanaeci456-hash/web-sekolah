@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning SMKN2 Surabaya - Ultimate Neon Animated BG</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-cyan: #00f5ff;
+      --neon-purple: #ff00ff;
+      --neon-magenta: #7c3aed;
+      --bg-dark: #05050a;
+      --glass: rgba(255,255,255,0.08);
+      --glow-cyan: 0 0 30px rgba(0,245,255,0.8);
+      --glow-purple: 0 0 30px rgba(255,0,255,0.7);
+      color: #e2e8f0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(ellipse at center, var(--bg-dark) 0%, #0a0a1f 70%);
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* MULTI-LAYER ANIMATED BACKGROUND */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bg-layer-1 {
+      background: 
+        radial-gradient(circle at 20% 30%, var(--neon-cyan) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, var(--neon-purple) 0%, transparent 50%);
+      animation: layerFloat1 20s ease-in-out infinite;
+      opacity: 0.4;
+    }
+
+    .bg-layer-2 {
+      background: 
+        radial-gradient(ellipse at 40% 80%, var(--neon-magenta) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 10%, var(--neon-cyan) 0%, transparent 40%);
+      animation: layerFloat2 25s ease-in-out infinite reverse;
+      opacity: 0.3;
+    }
+
+    .bg-layer-3 {
+      background: 
+        linear-gradient(45deg, transparent 40%, rgba(0,245,255,0.1) 50%, transparent 60%),
+        linear-gradient(-45deg, transparent 40%, rgba(255,0,255,0.08) 50%, transparent 60%);
+      animation: shineSweep 6s linear infinite;
+    }
+
+    @keyframes layerFloat1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(10vw, -5vh) scale(1.1); }
+      66% { transform: translate(-8vw, 8vh) scale(1.05); }
+    }
+
+    @keyframes layerFloat2 {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.08); }
+    }
+
+    @keyframes shineSweep {
+      0% { transform: translateX(-120%) translateY(-120%) rotate(45deg); }
+      100% { transform: translateX(120vw) translateY(120vh) rotate(45deg); }
+    }
+
+    /* Particles Canvas */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(30px);
+      background: var(--glass);
+      border-bottom: 1px solid rgba(0,245,255,0.25);
+      z-index: 100;
+      transition: all 0.4s ease;
+    }
+
+    .topbar.scrolled {
+      background: rgba(5,5,10,0.95);
+      box-shadow: var(--glow-cyan);
+      backdrop-filter: blur(40px);
+    }
+
+    .topbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      min-height: 85px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .brand-mark {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: #000;
+      letter-spacing: 0.15em;
+      animation: pulseGlow 2.5s ease-in-out infinite alternate;
+      box-shadow: var(--glow-cyan);
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: var(--glow-cyan); }
+      100% { box-shadow: 0 0 50px var(--neon-cyan), 0 0 80px var(--neon-purple); }
+    }
+
+    .brand-label {
+      font-size: 0.85rem;
+      color: var(--neon-cyan);
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 1rem 2rem;
+      border-radius: 35px;
+      color: rgba(226,232,240,0.9);
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      opacity: 0;
+      border-radius: 35px;
+      z-index: -1;
+    }
+
+    .nav-link:hover::before, .nav-link.active::before {
+      opacity: 0.2;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--neon-cyan);
+      transform: translateY(-3px);
+      box-shadow: var(--glow-cyan);
+    }
+
+    /* Content */
+    .page-shell { padding-top: 95px; }
+
+    .section {
+      padding: 140px 0;
+      min-height: 100vh;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-copy {
+      opacity: 0;
+      transform: translateY(60px);
+      animation: fadeSlideUp 1.2s 0.6s forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: 0.9;
+      font-weight: 950;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 35%, var(--neon-purple) 65%, var(--neon-magenta) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-size: 300% 300%;
+      animation: titleRainbow 4s ease-in-out infinite;
+    }
+
+    @keyframes titleRainbow {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 100% 0%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+    }
+
+    .hero-text {
+      font-size: 1.25rem;
+      line-height: 1.85;
+      max-width: 650px;
+      color: rgba(226,232,240,0.95);
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      padding: 1.4rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      box-shadow: var(--glow-cyan), 0 25px 50px rgba(0,245,255,0.35);
+    }
+
+    .secondary {
+      background: var(--glass);
+      color: #e2e8f0;
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+    }
+
+    .button:hover {
+      transform: translateY(-8px) scale(1.08);
+      box-shadow: 0 35px 70px rgba(0,245,255,0.5);
+    }
+
+    /* Stats */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(160px,1fr));
+      gap: 2rem;
+    }
+
+    .stat-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      backdrop-filter: blur(25px);
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-15px) rotate(2deg);
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-cyan);
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 900;
+      background: linear-gradient(var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: rgba(226,232,240,0.8);
+      font-weight: 500;
+    }
+
+    /* Panel */
+    .hero-panel {
+      display: grid;
+      gap: 2rem;
+    }
+
+    .panel-large {
+      padding: 3.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 36px;
+      backdrop-filter: blur(30px);
+      transition: all 0.5s ease;
+    }
+
+    .panel-large:hover {
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-primary);
+      transform: translateY(-10px);
+    }
+
+    .panel-label {
+      display: inline-flex;
+      gap: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      font-weight: 800;
+      border-radius: 30px;
+      letter-spacing: 0.2em;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+    }
+
+    .panel-large h2 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1;
+      margin-bottom: 2rem;
+      background: linear-gradient(var(--neon-magenta), var(--neon-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .panel-text {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: rgba(226,232,240,0.95);
+      margin-bottom: 2.5rem;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 1.5rem;
+    }
+
+    .panel-small {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .panel-small:hover {
+      background: linear-gradient(var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: var(--glow-primary);
+    }
+
+    /* Features Grid */
+    .features {
+      margin-top: 10rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px,1fr));
+      gap: 2.5rem;
+    }
+
+    .feature-card {
+      padding: 3rem 2.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      backdrop-filter: blur(25px);
+      text-align: center;
+      transition: all 0.5s cubic-bezier(0.23,1,0.32,1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      opacity: 0;
+      z-index: -1;
+    }
+
+    .feature-card:hover::before { opacity: 0.1; }
+
+    .feature-card:hover {
+      transform: translateY(-25px) rotateX(10deg) scale(1.04);
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-primary), 0 50px 100px rgba(0,245,255,0.3);
+    }
+
+    .feature-icon {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      display: block;
+      transition: all 0.4s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: rotateY(360deg) scale(1.3);
+      text-shadow: var(--glow-primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(var(--neon-purple), var(--neon-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .feature-card p {
+      line-height: 1.85;
+      color: rgba(226,232,240,0.9);
+      font-size: 1.1rem;
+    }
+
+    /* Section Alt */
+    .section-alt {
+      background: rgba(15,15,35,0.8);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    /* Learning */
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px,1fr));
+      gap: 2.5rem;
+    }
+
+    .material-card {
+      padding: 3rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      backdrop-filter: blur(25px);
+      cursor: pointer;
+      transition: all 0.5s ease;
+    }
+
+    .material-card:hover {
+      transform: translateY(-20px);
+      border-color: var(--neon-magenta);
+      box-shadow: var(--glow-purple);
+    }
+
+    .material-card h3 {
+      font-size: 1.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Quiz */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+      gap: 2.5rem;
+    }
+
+    .quiz-card {
+      padding: 3rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      backdrop-filter: blur(25px);
+      text-align: center;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-15px);
+      border-color: var(--neon-cyan);
+      box-shadow: var(--glow-primary);
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(50px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--glass);
+      backdrop-filter: blur(60px);
+      border: 1px solid var(--glass-border);
+      border-radius: 36px;
+      max-width: 95vw;
+      max-height: 95vh;
+      width: 1000px;
+      height: 750px;
+      padding: 4rem;
+      overflow-y: auto;
+      position: relative;
+      transform: scale(0.7) translateY(60px);
+      transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 60px 120px rgba(0,0,0,0.9);
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 2px solid var(--glass-border);
+    }
+
+    .modal-title {
+      font-size: 2.8rem;
+      font-weight: 950;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .modal-close {
+      background: linear-gradient(var(--neon-purple), var(--neon-magenta));
+      color: #000;
+      font-size: 2rem;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: var(--glow-purple);
+    }
+
+    .modal-close:hover {
+      transform: rotate(180deg) scale(1.15);
+      box-shadow: 0 0 50px rgba(255,0,255,1);
+    }
+
+    .modal-body h2 {
+      font-size: 2rem;
+      color: var(--neon-cyan);
+      margin: 2.5rem 0 1.5rem;
+      padding-left: 1.5rem;
+      border-left: 5px solid var(--neon-cyan);
+    }
+
+    .modal-body p, .modal-body li {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Enhanced Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2.5rem 0;
+      background: var(--glass);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      border: 2px solid var(--glass-border);
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      padding: 1.8rem 1.5rem;
+      text-align: left;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    td {
+      padding: 1.8rem 1.5rem;
+      border-bottom: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+    }
+
+    tr:hover td {
+      background: linear-gradient(90deg, rgba(0,245,255,0.15), rgba(255,0,255,0.1));
+      transform: scale(1.01);
+    }
+
+    tr:nth-child(even) td {
+      background: rgba(255,255,255,0.03);
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero { grid-template-columns: 1fr; gap: 4rem; }
+    }
+
+    @media (max-width: 768px) {
+      .topbar__inner { flex-direction: column; gap: 1.5rem; }
+      .features, .learning-grid { grid-template-columns: 1fr; }
+      .modal-content { width: 98vw; height: 92vh; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar__inner container">
+        <a class="brand" href="#beranda">
+          <span class="brand-mark">SMK</span>
+          <div>
+            <span class="brand-label">SMKN 2 Surabaya</span>
+            <strong class="brand-title">E-Learning Konstruksi</strong>
+          </div>
+        </a>
+        <nav class="nav">
+          <a class="nav-link active" href="#beranda">Beranda</a>
+          <a class="nav-link" href="#pembelajaran">Pembelajaran</a>
+          <a class="nav-link" href="#soal">Soal</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="beranda" class="section hero-section">
+        <!-- Animated Background Layers -->
+        <div class="bg-layer bg-layer-1"></div>
+        <div class="bg-layer bg-layer-2"></div>
+        <div class="bg-layer bg-layer-3"></div>
+        <canvas id="particles-canvas"></canvas>
+        
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Platform Terbaik SMKN2</span>
+            <h1>Master Konstruksi<br><span>dengan Neon Tables</span></h1>
+            <p class="hero-text">Klik materi → <strong>Fullscreen animated tables</strong> dengan spesifikasi lengkap alat, takaran, tahapan. Background bergerak 24/7!</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#pembelajaran">Buka Tables</a>
+              <a class="button secondary" href="#soal">Coba Quiz</a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-card">
+                <div class="stat-number">4</div>
+                <span>Neon Tables</span>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <span>Spesifikasi</span>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">Live</div>
+                <span>Animated BG</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="panel-large">
+              <span class="panel-label">ANIMATED BACKGROUND</span>
+              <h2>3 Layer Floating<br>+ Particles + Shine</h2>
+              <p>Background bergerak terus: radial pulses, shine sweeps, mouse-reactive particles. + Fullscreen tables!</p>
+            </div>
+            <div class="panel-grid">
+              <div class="panel-small" data-modal="leveling">📐 Leveling</div>
+              <div class="panel-small" data-modal="pondasi">🏗️ Pondasi</div>
+              <div class="panel-small" data-modal="beton">🏢 Beton</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pembelajaran" class="section section-alt">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">FULLSCREEN TABLES</span>
+            <h2>Materi dengan Table Lengkap</h2>
+          </div>
+          <div class="learning-grid">
+            <article class="material-card" data-modal="leveling">
+              <h3>📐 Leveling &amp; Pengukuran</h3>
+              <p>Full table alat + spesifikasi. Klik → <strong>Fullscreen neon table</strong></p>
+            </article>
+            <article class="material-card" data-modal="pondasi">
+              <h3>🏗️ Pondasi</h3>
+              <p>Jenis, kedalaman, lebar dalam animated table</p>
+            </article>
+            <article class="material-card" data-modal="beton">
+              <h3>🏢 Beton Bertulang</h3>
+              <p>Ø besi, takaran beton, spasi lengkap</p>
+            </article>
+            <article class="material-card" data-modal="dinding">
+              <h3>🧱 Dinding</h3>
+              <p>Adukan rasio + ketebalan table</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="soal" class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Quiz Mode</span>
+            <h2>Test dengan Neon Tables</h2>
+          </div>
+          <div class="quiz-grid">
+            <article class="quiz-card">
+              <h3>🏗️ Struktur</h3>
+              <p>50+ soal pondasi &amp; beton dari tables</p>
+            </article>
+            <article class="quiz-card">
+              <h3>🧱 Finishing</h3>
+              <p>Dinding, plesteran spesifikasi</p>
+            </article>
+            <article class="quiz-card">
+              <h3>⚙️ Tools</h3>
+              <li>Leveling tools MCQ</li>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <strong>SMKN 2 Surabaya</strong>
+        <p>Ultimate Neon - Animated BG + Fullscreen Tables</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Neon Fullscreen Modals -->
+  <div class="modal-overlay" id="leveling">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">📐 LEVELING TOOLS TABLE</h1>
+        <button class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <h2>Complete Equipment Spec</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Function</th>
+              <th>Spec</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Waterpass</td><td>Surface level</td><td>1-2m, ±0.5mm/m accuracy</td></tr>
+            <tr><td>Theodolite</td><td>Angle/distance</td><td>20" precision</td></tr>
+            <tr><td>Laser Tape</td><td>Distance</td><td>50m range, ±1.5mm</td></tr>
+            <tr><td>Stake</td><td>Marking</td><td>30x30cm wood/iron</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Multi-layer animated background + enhanced particles
+    const canvas = document.createElement('canvas');
+    canvas.id = 'particles-canvas';
+    canvas.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none';
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    let animationFrame;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const particles = [];
+    for (let i = 0; i < 150; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8,
+        radius: Math.random() * 4 + 1,
+        alpha: Math.random() * 0.8 + 0.2,
+        hue: 190 + Math.random() * 80, // Cyan-purple spectrum
+        life: Math.random() * 100 + 50
+      });
+    }
+
+    let mouse = { x: 0, y: 0 };
+    document.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p, i) => {
+        // Mouse interaction - particles flee
+        const dx = mouse.x - p.x;
+        const dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          p.vx += (dx / dist) * 0.8;
+          p.vy += (dy / dist) * 0.8;
+        }
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+
+        // Boundary bounce
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        // Update hue & alpha
+        p.hue += 0.8;
+        p.alpha = Math.sin(p.life * 0.05) * 0.5 + 0.3;
+
+        // Draw with glow
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+        gradient.addColorStop(0, `hsla(${p.hue}, 80%, 65%, 0.9)`);
+        gradient.addColorStop(0.6, `hsla(${p.hue}, 70%, 60%, 0.4)`);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = `hsla(${p.hue}, 80%, 65%, 0.6)`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        p.life++;
+        if (p.life > 200) {
+          particles[i] = new (function() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.8;
+            this.vy = (Math.random() - 0.5) * 0.8;
+            this.radius = Math.random() * 4 + 1;
+            this.alpha = 0;
+            this.hue = 190 + Math.random() * 80;
+            this.life = 0;
+          })();
+        }
+      });
+
+      animationFrame = requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // Navbar scroll
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          document.querySelector('.topbar').classList.toggle('scrolled', window.scrollY > 100);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Feature card stagger animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    document.querySelectorAll('.feature-card, .material-card').forEach((card, index) => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(60px)';
+      card.style.transition = `all 0.8s cubic-bezier(0.34,1.56,0.64,1) ${index * 0.1}s`;
+      observer.observe(card);
+    });
+
+    // Modal system
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-modal]');
+      if (trigger) {
+        const modalId = trigger.dataset.modal + '-modal';
+        const modal = document.getElementById(modalId);
+        if (modal) modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        return;
+      }
+
+      const closeBtn = e.target.closest('.modal-close');
+      if (closeBtn) {
+        closeBtn.closest('.modal-overlay').classList.remove('active');
+        document.body.style.overflow = '';
+        return;
+      }
+
+      if (e.target.classList.contains('modal-overlay')) {
+        e.target.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.active').forEach(m => {
+          m.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+    });
+
+    console.log('🌌 Ultimate Neon Animated Background Loaded!');
+  </script>
+</body>
+</html>
+

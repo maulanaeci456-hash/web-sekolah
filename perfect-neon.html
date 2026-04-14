@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Learning SMKN2 Surabaya</title>
+  <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Perfect Dark Neon - Moving BG + Full Materi Visible */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --neon-cyan: #00f5ff;
+      --neon-purple: #ff00ff;
+      --neon-magenta: #7c3aed;
+      --bg-dark: linear-gradient(135deg, #0a0a0f 0%, #0f0f23 50%, #0a0a0f 100%);
+      --glass: rgba(255,255,255,0.08);
+      --glass-border: rgba(0,245,255,0.3);
+      --glow: 0 0 25px rgba(0,245,255,0.6);
+      color: #e2e8f0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Moving Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 80%, var(--neon-cyan) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, var(--neon-purple) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, var(--neon-magenta) 0%, transparent 50%);
+      animation: bgMove 15s ease-in-out infinite;
+      z-index: -2;
+      opacity: 0.4;
+    }
+
+    @keyframes bgMove {
+      0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+      33% { transform: translate(10vw, -5vh) scale(1.05); opacity: 0.6; }
+      66% { transform: translate(-5vw, 5vh) scale(1.03); opacity: 0.5; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0,245,255,0.1) 50%, transparent 70%);
+      animation: shineMove 6s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes shineMove {
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100vw) rotate(45deg); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Navbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(20px);
+      background: var(--glass);
+      border-bottom: 1px solid var(--glass-border);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .topbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      min-height: 70px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #000;
+      box-shadow: var(--glow);
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      to { box-shadow: 0 0 40px rgba(0,245,255,0.8); }
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--neon-purple), var(--neon-magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      color: rgba(226,232,240,0.9);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--neon-cyan);
+      background: rgba(0,245,255,0.1);
+      box-shadow: var(--glow);
+    }
+
+    .page-shell { padding-top: 80px; }
+
+    /* Sections */
+    .section {
+      padding: 100px 0;
+      min-height: 100vh;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0%; }
+      50% { background-position: 100%; }
+    }
+
+    .hero-text {
+      font-size: 1.2rem;
+      color: rgba(226,232,240,0.9);
+      max-width: 550px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .button {
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      box-shadow: var(--glow);
+    }
+
+    .secondary {
+      background: var(--glass);
+      color: #e2e8f0;
+      border: 1px solid var(--glass-border);
+    }
+
+    .button:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,245,255,0.4);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      padding: 1.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 2rem;
+      color: var(--neon-cyan);
+    }
+
+    /* Panel */
+    .hero-panel {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .panel-large {
+      padding: 2.5rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
+      position: relative;
+    }
+
+    .panel-large h2 {
+      font-size: 2.5rem;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .panel-label {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 5rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--glow);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* Learning */
+    .section-alt {
+      background: rgba(15,15,35,0.5);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+
+    .learning-controls {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .search-input {
+      padding: 1rem 2rem;
+      border-radius: 30px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: inherit;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .learning-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .material-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .material-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--glow);
+    }
+
+    /* Quiz */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .quiz-card {
+      padding: 2rem;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 4rem 0;
+      text-align: center;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .topbar__inner {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar__inner container">
+        <a class="brand" href="#beranda">
+          <span class="brand-mark">SMK</span>
+          <div>
+            <span class="brand-label">SMKN 2 Surabaya</span>
+            <strong class="brand-title">E-Learning Konstruksi</strong>
+          </div>
+        </a>
+        <nav class="nav">
+          <a class="nav-link active" href="#beranda">Beranda</a>
+          <a class="nav-link" href="#pembelajaran">Pembelajaran</a>
+          <a class="nav-link" href="#soal">Soal Latihan</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="beranda" class="section hero-section">
+        <canvas id="particles" aria-hidden="true" style="position:fixed;top:0;left:0;width:100%;height:100vh;z-index:1;pointer-events:none;"></canvas>
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Platform Pembelajaran SMKN2</span>
+            <h1>Belajar konstruksi lebih cepat dengan modul <span>interaktif</span> dan latihan praktik.</h1>
+            <p class="hero-text">Materi, kuis, dan panduan khusus untuk siswa SMK Teknik Konstruksi Perumahan agar siap uji kompetensi dan proyek lapangan.</p>
+            <div class="hero-actions">
+              <a class="button primary" href="#pembelajaran">Mulai Belajar</a>
+              <a class="button secondary" href="#soal">Coba Kuis</a>
+            </div>
+            <div class="hero-stats">
+              <div class="stat-card">
+                <strong>120+</strong>
+                <span>Materi</span>
+              </div>
+              <div class="stat-card">
+                <strong>300+</strong>
+                <span>Soal Latihan</span>
+              </div>
+              <div class="stat-card">
+                <strong>24/7</strong>
+                <span>Akses Konten</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="panel-large">
+              <span class="panel-label">Modul Unggulan</span>
+              <h2>MATERI DASAR-DASAR<br>TEKNIK PEKERJAAN KONSTRUKSI</h2>
+              <p>Petunjuk langkah demi langkah mulai dari pengukuran lahan, pondasi, hingga finishing bangunan.</p>
+              <span class="panel-footer">Pelajari lebih lanjut →</span>
+            </div>
+            <div class="panel-grid">
+              <div class="panel-small">📘 Modul Digital</div>
+              <div class="panel-small">📝 Kuis Interaktif</div>
+              <div class="panel-small">🎯 Materi Terstruktur</div>
+            </div>
+          </div>
+        </div>
+        <div class="features">
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3>Materi Terstruktur</h3>
+            <p>Konten disusun sesuai topik agar mudah dipahami dan diulang.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✏️</div>
+            <h3>Quiz Interaktif</h3>
+            <p>Latihan untuk menguji pemahaman secara praktis.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📺</div>
+            <h3>Video Praktik</h3>
+            <p>Demo kerja lapangan yang mendukung teori teknik.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">👩‍🏫</div>
+            <h3>Dukungan Guru</h3>
+            <p>Tips belajar dan panduan khusus untuk siswa SMK.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pembelajaran" class="section section-alt">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Materi Pembelajaran</span>
+            <h2>Pelajari semua topik konstruksi dengan mudah</h2>
+          </div>
+          <div class="learning-controls">
+            <input type="text" placeholder="🔍 Cari materi pembelajaran..." class="search-input">
+          </div>
+          <div class="learning-grid">
+            <article class="material-card">
+              <h3>📐 Leveling & Pengukuran</h3>
+              <p>Teknik pengukuran dan penandaan lokasi bangunan sesuai gambar rencana.</p>
+              <button onclick="showMateri('leveling')" class="button primary" style="margin-top:1rem;width:100%;">Baca Materi Lengkap</button>
+              <div id="leveling-materi" style="display:none;margin-top:1rem;padding:1.5rem;background:rgba(255,255,255,0.1);border-radius:15px;">
+                <p>Setelah perencanaan selesai dan izin bangunan (PBG/IMB) telah diterbitkan, maka pekerjaan di lapangan dapat dimulai dengan tahap persiapan yang sangat penting, yaitu pekerjaan leveling dan pengukuran lapangan (uitzet).</p>
+                <p>Pada tahap ini, tim pelaksana (biasanya mandor atau surveyor) melakukan pengukuran dan penandaan secara akurat di lapangan sesuai dengan gambar kerja yang telah disusun pada tahap Construction Drawing. Pekerjaan leveling bertujuan untuk menentukan ketinggian (elevasi) tanah yang tepat, sehingga pondasi dan struktur bangunan dapat dibuat rata dan sesuai rencana. Sedangkan pekerjaan uitzet (staking out) adalah proses penancapan patok-patok kayu atau besi di tanah untuk menandai batas-batas bangunan, sumbu ruangan, garis pondasi, serta posisi kolom dan dinding.</p>
+                <p>Fungsi utama dari pekerjaan leveling dan uitzet adalah memastikan bahwa posisi dan dimensi rumah di lapangan benar-benar sesuai dengan gambar desain, menghindari kesalahan ukuran yang dapat menyebabkan pemborosan material atau bahkan perubahan ulang struktur di kemudian hari. Alat yang biasa digunakan antara lain waterpass, theodolite, meteran laser, dan patok uitzet.</p>
+                <p>Hasil dari tahap ini adalah lahan yang sudah "ditandai" dengan jelas, siap untuk tahap selanjutnya yaitu pembersihan lahan dan penggalian pondasi. Apabila leveling dan uitzet dilakukan dengan teliti, seluruh proses pembangunan rumah akan berjalan lebih lancar dan akurat.</p>
+                <button onclick="hideMateri('leveling')" class="button secondary" style="margin-top:1rem;">Tutup</button>
+              </div>
+            </article>
+          
+            <article class="material-card">
+              <h3>🏗️ Galian & Pondasi</h3>
+              <p>Dasar pondasi perumahan untuk membangun struktur yang kuat.</p>
+            </article>
+            <article class="material-card">
+              <h3>🏢 Beton Bertulang</h3>
+              <p>Sloof, kolom, dan balok sebagai kerangka utama bangunan.</p>
+            </article>
+            <article class="material-card">
+              <h3>🧱 Pekerjaan Dinding</h3>
+              <p>Pemasangan bata, plesteran, dan finishing dinding.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="soal" class="section">
+        <div class="container">
+          <div class="section-header">
+            <span class="eyebrow">Soal Latihan</span>
+            <h2>Uji kemampuanmu dengan kuis konstruksi</h2>
+          </div>
+          <div class="quiz-grid">
+            <article class="quiz-card">
+              <h3>🏗️ Struktur</h3>
+              <p>Soal tentang pondasi, sloof, kolom, dan balok.</p>
+            </article>
+            <article class="quiz-card">
+              <h3>🧱 Dinding</h3>
+              <p>Soal tentang pemasangan dinding, plesteran, dan finishing.</p>
+            </article>
+            <article class="quiz-card">
+              <h3>⚡ Utilitas</h3>
+              <p>Soal tentang listrik, air, dan instalasi bangunan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="container">
+          <div style="text-align: center; padding: 3rem 0;">
+            <strong style="font-size: 1.2rem; display: block; margin-bottom: 1rem;">SMKN 2 Surabaya</strong>
+            <p>Platform pembelajaran konstruksi yang modern dan interaktif.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+      function showMateri(id) {
+        document.getElementById(id + '-materi').style.display = 'block';
+      }
+
+      function hideMateri(id) {
+        document.getElementById(id + '-materi').style.display = 'none';
+      }
+
+    <script>
+      // Moving Background Particles
+      const canvas = document.getElementById('particles');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            r: Math.random() * 3 + 1,
+            hue: 200 + Math.random() * 60
+          });
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.fillStyle = `hsla(${p.hue}, 70%, 60%, 0.5)`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          });
+          requestAnimationFrame(animate);
+        }
+        animate();
+        window.addEventListener('resize', () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        });
+      }
+
+      // Smooth Scroll Nav
+      document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelectorAll('nav a').forEach(n => n.classList.remove('active'));
+          this.classList.add('active');
+          const target = document.querySelector(this.getAttribute('href'));
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      // Navbar Active on Scroll
+      window.addEventListener('scroll', () => {
+        let current = '';
+        document.querySelectorAll('section[id]').forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+        document.querySelectorAll('nav a').forEach(a => {
+          a.classList.remove('active');
+          if (a.getAttribute('href') === `#${current}`) {
+            a.classList.add('active');
+          }
+        });
+      });
+    </script>
+</body>
